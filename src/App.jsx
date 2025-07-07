@@ -1,12 +1,9 @@
 function App() {
   return (
     <>
-      <h1
-        className="bg-linear-to-r from-[hsl(249, 99%, 64%)]
-       to-[hsl(278, 94%, 30%)]"
-      >
+      <div className="bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 size-56 ">
         working
-      </h1>
+      </div>
     </>
   );
 }
