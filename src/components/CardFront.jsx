@@ -1,11 +1,21 @@
+import { useState } from "react";
 import cardLogo from "../assets/images/card-logo.svg";
 
-export function CardFront() {
+export function CardFront({
+  cardNumber = "0000 0000 0000 0000",
+  cardName = "Jhon Doe",
+  cardExpiry = "00/00",
+}) {
+  const [cardDetails, setCardDetails] = useState({
+    cardNumber: cardNumber,
+    cardName: cardName,
+    cardExpiry: cardExpiry,
+  });
   return (
     <>
       <div
-        className="
-        w-full max-w-sm aspect-[1.58/1] bg-Purple-950
+        className=" 
+        w-full max-w-sm aspect-[1.58/1]
         bg-[url('.\assets\images\bg-card-front.png')] 
        bg-no-repeat bg-contain relative bg-center"
       >
@@ -16,11 +26,11 @@ export function CardFront() {
         />
         <div className="absolute bottom-[15%] left-[8%]">
           <p className="text-white font-medium text-2xl tracking-widest mb-4">
-            0000 0000 0000 0000
+            {cardDetails.cardNumber}
           </p>
           <div className="flex justify-between items-center text-lg text-white uppercase">
-            <p>Jane Appleseed</p> {/* Replace with actual card holder name */}
-            <p>00/00</p> {/* Replace with actual expiry */}
+            <p>{cardDetails.cardName}</p>
+            <p>{cardDetails.cardExpiry}</p>
           </div>
         </div>
       </div>
