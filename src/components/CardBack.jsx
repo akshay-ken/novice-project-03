@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-export function CardBack({ cvv = "000" }) {
-  const [cardCvv, setCvv] = useState(cvv);
+export function CardBack({ cvc }) {
   return (
     <>
       <div
@@ -9,9 +6,7 @@ export function CardBack({ cvv = "000" }) {
       bg-contain bg-no-repeat max-w-sm relative bg-center aspect-[1.58/1]"
       >
         <div className="size-12 absolute top-[43%] right-[10%]">
-          <p className="text-white font-bold tracking-widest text-xl">
-            {cardCvv}
-          </p>
+          <p className="text-white font-bold tracking-widest text-xl">{cvc}</p>
         </div>
       </div>
     </>
