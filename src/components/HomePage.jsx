@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CardBack } from "./CardBack";
 import { CardForm } from "./CardForm";
 import { CardFront } from "./CardFront";
+import { ThankYouPage } from "./ThankYouPage";
 
 export function HomePage() {
   const [cardDetails, setCardDetails] = useState({
@@ -148,13 +149,12 @@ export function HomePage() {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    if (!error.nameError) {
-      if (!error.numberError) {
-        if (!error.cvcError) {
-          if (!error.mmError) {
-            if (!error.yyError) {
+    if (cardDetails.cardName && !error.nameError) {
+      if (cardDetails.cardNumber && !error.numberError) {
+        if (cardDetails.MM) {
+          if (cardDetails.YY) {
+            if (cardDetails.cvc) {
               setThankyouPage(true);
-              console.log("workign");
             }
           }
         }
@@ -178,18 +178,22 @@ export function HomePage() {
           </div>
         </div>
         <div className="mt-[30%] md:mt-[10%] p-6 md:w-1/2">
-          <CardForm
-            cardExpiry={cardDetails.cardExpiry}
-            name={cardDetails.cardName}
-            onChangeCardDetails={onChangeCardDetails}
-            cardNumber={cardDetails.cardNumber}
-            mm={cardDetails.MM}
-            yy={cardDetails.YY}
-            cvc={cardDetails.cvc}
-            handleSubmit={handleSubmit}
-            error={error}
-            errorText={errorMsg}
-          />
+          {thankyouPage ? (
+            <ThankYouPage onClick={() => setThankyouPage(false)} />
+          ) : (
+            <CardForm
+              cardExpiry={cardDetails.cardExpiry}
+              name={cardDetails.cardName}
+              onChangeCardDetails={onChangeCardDetails}
+              cardNumber={cardDetails.cardNumber}
+              mm={cardDetails.MM}
+              yy={cardDetails.YY}
+              cvc={cardDetails.cvc}
+              handleSubmit={handleSubmit}
+              error={error}
+              errorText={errorMsg}
+            />
+          )}
         </div>
       </main>
     </>
