@@ -1,6 +1,6 @@
 import cardLogo from "../assets/images/card-logo.svg";
 
-export function CardFront({ cardNumber, cardName, cardExpiry }) {
+export function CardFront({ cardNumber, cardName, mm, yy }) {
   return (
     <>
       <div
@@ -20,7 +20,9 @@ export function CardFront({ cardNumber, cardName, cardExpiry }) {
           </p>
           <div className="flex justify-between items-center text-lg text-white uppercase">
             <p>{cardName}</p>
-            <p>{cardExpiry}</p>
+            <p>
+              {mm}/{yy}
+            </p>
           </div>
         </div>
       </div>

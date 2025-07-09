@@ -7,6 +7,21 @@
   }
 }
 
+@layer components {
+  .labelClass {
+    @apply text-lg tracking-wider text-Purple-950 font-medium uppercase;
+  }
+  .confirmButton {
+    @apply text-2xl text-white font-bold bg-Purple-950 p-4 w-full rounded-lg;
+  }
+  .inputStyles {
+    @apply placeholder:text-2xl text-xl outline-2 p-3 rounded-lg outline-Gray-400 placeholder:text-Gray-400 w-full mt-2;
+  }
+  .inputStylesNumbers {
+    @apply placeholder:text-2xl text-xl outline-2 p-3 rounded-lg outline-Gray-400 placeholder:text-Gray-400 w-2/12 inline mt-2 mx-2;
+  }
+}
+
 @theme {
   --font-one: Space Grotesk;
   --color-Gray-200: hsl(270, 3%, 87%);
