@@ -1,6 +1,11 @@
 import cardLogo from "../assets/images/card-logo.svg";
 
-export function CardFront({ cardNumber, cardName, mm, yy }) {
+export function CardFront({
+  cardNumber = "0000 0000 0000 0000",
+  cardName = "Jhon Doe",
+  mm = "00",
+  yy = "00",
+}) {
   return (
     <>
       <div

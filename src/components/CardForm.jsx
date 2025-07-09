@@ -11,12 +11,8 @@ export function CardForm({
   error,
   errorText,
 }) {
-  const inputStyles = clsx("inputStyles", {
-    "outline-4 outline-red-500 text-red-400": error,
-  });
-  const inputStylesNumbers = clsx("inputStylesNumbers", {
-    "outline-4 outline-red-500 text-red-400": error,
-  });
+  const inputStyles = clsx("inputStyles");
+  const inputStylesNumbers = clsx("inputStylesNumbers");
   return (
     <>
       <form className=" space-y-6" onSubmit={handleSubmit}>
@@ -25,11 +21,14 @@ export function CardForm({
         </label>
         <input
           type="text"
+          value={name}
           placeholder="e.g. John Doe"
           // value={name}
           name="cardName"
           onChange={onChangeCardDetails}
-          className={inputStyles}
+          className={clsx(inputStyles, {
+            "outline-4 outline-red-500 text-red-400": error.nameError,
+          })}
         />
         <p className="text-sm font-bold text-red-600 -mt-6 text-center">
           {errorText.nameError}
@@ -44,7 +43,9 @@ export function CardForm({
           name="cardNumber"
           // value={cardNumber}
           onChange={onChangeCardDetails}
-          className={inputStyles}
+          className={clsx(inputStyles, {
+            "outline-4 outline-red-500 text-red-400": error.numberError,
+          })}
         />
         <p className="text-sm font-bold text-red-600 -mt-6 text-center">
           {errorText.numberError}
@@ -58,26 +59,41 @@ export function CardForm({
           name="MM"
           onChange={onChangeCardDetails}
           placeholder="MM"
-          className={inputStylesNumbers}
+          className={clsx(inputStylesNumbers, {
+            "outline-4 outline-red-500 text-red-400": error.mmError,
+          })}
         />
+
         <input
           type="number"
           name="YY"
           onChange={onChangeCardDetails}
           // value={yy}
           placeholder="YY"
-          max={99}
-          className={inputStylesNumbers}
+          className={clsx(inputStylesNumbers, {
+            "outline-4 outline-red-500 text-red-400": error.yyError,
+          })}
         />
+
         <input
           type="number"
           placeholder="eg. 123"
           name="cvc"
           // value={cvc}
           onChange={onChangeCardDetails}
-          className={`${inputStylesNumbers} w-4/12`}
+          className={clsx(inputStylesNumbers, "w-4/12", {
+            "outline-4 outline-red-500 text-red-400": error.cvcError,
+          })}
         />
-        {/* <p className="text-sm font-bold text-red-600 -mt-6 text-right">Error</p> */}
+        <p className="text-sm font-bold text-red-600 -mt-6 text-center">
+          {errorText.mmError}
+        </p>
+        <p className="text-sm font-bold text-red-600 -mt-6 text-left">
+          {errorText.yyError}
+        </p>
+        <p className="text-sm font-bold text-red-600 -mt-6 text-right">
+          {errorText.cvcError}
+        </p>
         <button className="confirmButton" type="submit">
           Confirm
         </button>

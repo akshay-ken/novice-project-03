@@ -1,4 +1,4 @@
-export function CardBack({ cvc }) {
+export function CardBack({ cvc = "000" }) {
   return (
     <>
       <div

@@ -5,40 +5,138 @@ import { CardFront } from "./CardFront";
 
 export function HomePage() {
   const [cardDetails, setCardDetails] = useState({
-    cardNumber: "0000 0000 0000 0000",
-    cardName: "Jhon Doe",
-    MM: "00",
-    YY: "00",
-    cvc: "000",
+    cardNumber: undefined,
+    cardName: undefined,
+    MM: undefined,
+    YY: undefined,
+    cvc: undefined,
   });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    nameError: false,
+    numberError: false,
+    mmError: false,
+    yyError: false,
+    cvcError: false,
+  });
   const [errorMsg, setErrorMsg] = useState({
     nameError: "",
     numberError: "",
+    mmError: "",
+    yyError: "",
+    cvcError: "",
   });
+  // thankyou page state;
+  const [thankyouPage, setThankyouPage] = useState(false);
 
   function onChangeCardDetails(event) {
     const { name, value } = event.target;
     let newValue = value;
+    if (name === "cardName") {
+      if (newValue.trim().length < 4) {
+        setError((prev) => {
+          return { ...prev, nameError: true };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, nameError: "Cardholder name is too short." };
+        });
+      } else {
+        setError((prev) => {
+          return { ...prev, nameError: false };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, nameError: "" };
+        });
+      }
+    }
+    //for cardNumber
+    if (name === "cardNumber") {
+      const cleanedCardNumber = newValue.replace(/\s/g, "");
+      if (cleanedCardNumber.length !== 16 || !/^\d+$/.test(cleanedCardNumber)) {
+        setError((prev) => {
+          return { ...prev, numberError: true };
+        });
+        setErrorMsg((prev) => {
+          return { ...prev, numberError: "Card number must be 16 digits." };
+        });
+      } else {
+        setError((prev) => {
+          return { ...prev, numberError: false };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, numberError: "" };
+        });
+      }
+    }
     if (name === "MM") {
-      const numValue = Number(value);
+      const numValue = Number(newValue);
       if (!isNaN(numValue) && numValue > 12) {
-        newValue = "12";
+        // newValue = "12";
+        const mmValue = Number(newValue);
+        if (isNaN(mmValue) || mmValue < 1 || mmValue > 12) {
+          setError((prev) => {
+            return { ...prev, mmError: true };
+          });
+          setErrorMsg((prev) => {
+            return { ...prev, mmError: "Invalid month." };
+          });
+        }
       } else {
         newValue = value;
+        setError((prev) => {
+          return { ...prev, mmError: false };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, mmError: "" };
+        });
       }
     }
     if (name === "YY") {
       const numValue = Number(value);
       if (!isNaN(numValue) && numValue > 99) {
-        newValue = "25";
+        // newValue = "25";
+        const mmValue = Number(newValue);
+        if (isNaN(mmValue) || mmValue < 99 || mmValue > 25) {
+          setError((prev) => {
+            return { ...prev, yyError: true };
+          });
+          setErrorMsg((prev) => {
+            return { ...prev, yyError: "Invalid month." };
+          });
+        }
       } else {
         newValue = value;
+        setError((prev) => {
+          return { ...prev, yyError: false };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, yyError: "" };
+        });
       }
     }
     if (name === "cvc") {
       if (value.length > 3) {
-        newValue = value.slice(0, 3);
+        // newValue = value.slice(0, 3);
+
+        setError((prev) => {
+          return { ...prev, cvcError: true };
+        });
+        setErrorMsg((prev) => {
+          return { ...prev, cvcError: "CVC" };
+        });
+      } else {
+        newValue = value;
+        setError((prev) => {
+          return { ...prev, cvcError: false };
+        });
+
+        setErrorMsg((prev) => {
+          return { ...prev, cvcError: "" };
+        });
       }
     }
     setCardDetails((prevValue) => {
@@ -50,95 +148,24 @@ export function HomePage() {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    // if (cardDetails.cardNumber.length < 16) {
-    //   setError(true);
-    //   setErrorMsg((prev) => {
-    //     return { ...prev, numberError: "Enter Valid Card Number" };
-    //   });
-    // } else {
-    //   setError(false);
-    //   setErrorMsg((prev) => {
-    //     return { ...prev, numberError: "" };
-    //   });
-    // }
-    // if (cardDetails.cardName.length < 4) {
-    //   setError(true);
-    //   setErrorMsg((prev) => {
-    //     return { ...prev, nameError: "Invalid User Name" };
-    //   });
-    // } else if (
-    //   cardDetails.cardName.length > 4 &&
-    //   cardDetails.cardName !== "Jhon Doe"
-    // ) {
-    //   setError(false);
-    //   setErrorMsg((prev) => {
-    //     return { ...prev, nameError: "" };
-    //   });
-    // }
-    // --- Validation Logic ---
-
-    let isValid = false;
-    const newErrorMessages = {
-      // Object to collect errors
-      nameError: "",
-      numberError: "",
-      mmError: "",
-      yyError: "",
-      cvcError: "",
-    };
-
-    // Cardholder Name Validation
-    if (cardDetails.cardName.trim().length < 4) {
-      isValid = true;
-      newErrorMessages.nameError = "Cardholder name is too short.";
+    if (!error.nameError) {
+      if (!error.numberError) {
+        if (!error.cvcError) {
+          if (!error.mmError) {
+            if (!error.yyError) {
+              setThankyouPage(true);
+              console.log("workign");
+            }
+          }
+        }
+      }
     }
-
-    // Card Number Validation
-    const cleanedCardNumber = cardDetails.cardNumber.replace(/\s/g, "");
-    if (cleanedCardNumber.length !== 16 || !/^\d+$/.test(cleanedCardNumber)) {
-      isValid = true;
-      newErrorMessages.numberError = "Card number must be 16 digits.";
-    }
-
-    // MM Validation
-    const mmValue = Number(cardDetails.MM);
-    if (isNaN(mmValue) || mmValue < 1 || mmValue > 12) {
-      isValid = true;
-      newErrorMessages.mmError = "Invalid month.";
-    }
-
-    // YY Validation
-    const yyValue = Number(cardDetails.YY);
-    // Basic check: must be a number and not 00
-    if (isNaN(yyValue) || yyValue === 0) {
-      isValid = true;
-      newErrorMessages.yyError = "Invalid year.";
-    }
-    // More robust check: check if date is in the future
-    const currentYear = new Date().getFullYear() % 100; // Get last two digits of current year
-    const currentMonth = new Date().getMonth() + 1; // Get current month (1-12)
-    if (
-      yyValue < currentYear ||
-      (yyValue === currentYear && mmValue < currentMonth)
-    ) {
-      isValid = true;
-      newErrorMessages.yyError = "Expiry date must be in the future.";
-    }
-
-    // CVC Validation
-    if (cardDetails.cvc.length !== 3 || !/^\d+$/.test(cardDetails.cvc)) {
-      isValid = true;
-      newErrorMessages.cvcError = "CVC must be 3 digits.";
-    }
-
-    setError(isValid);
-    setErrorMsg(newErrorMessages);
   }
   return (
     <>
-      <main className="w-full">
-        <div className="w-full h-80 bg-Purple-950">
-          <div className="relative top-40 ml-2 z-10">
+      <main className="w-full md:flex md:flex-row">
+        <div className="w-full h-80 bg-Purple-950 md:h-screen ">
+          <div className="relative top-40 ml-2 z-10 md:left-40">
             <CardFront
               mm={cardDetails.MM}
               yy={cardDetails.YY}
@@ -150,7 +177,7 @@ export function HomePage() {
             <CardBack cvc={cardDetails.cvc} />
           </div>
         </div>
-        <div className="mt-[30%] p-6">
+        <div className="mt-[30%] md:mt-[10%] p-6 md:w-1/2">
           <CardForm
             cardExpiry={cardDetails.cardExpiry}
             name={cardDetails.cardName}
